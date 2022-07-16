@@ -1,1 +1,31 @@
-
+.app{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+  
+  
+    &__box{
+      height: 50vh;
+      width: 500px;
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+    
+      &__field1{
+        background-color: red;
+      }
+    
+      &__field2{
+        background-color: green;
+      }
+    
+      &__field3{
+        background-color: blue;
+      }
+    
+      &__field4{
+        background-color: yellow;
+      }
+    }
+  }
