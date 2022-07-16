@@ -6,53 +6,60 @@ function App() {
   const[colors, setColors] = useState([]);
   const[level, setLevel] = useState(3);
   const[light, setLight] = useState(0);
-  const[userColors,setUserColors] = useState([]);
+  let userColors =[];
+
 
   // random draw
   const handleDraw = e =>{
     e.preventDefault();
+    e.target.disabled = true;
     let br = 0;
     
     let draw = setInterval(()=>{
       let random = Math.floor(Math.random()*4)+1;
-      setLight(random)
+      setLight(random);
       setColors(colors=>[...colors,random]);
       br++;
 
       if(br === level){
-        clearInterval(draw)
+        clearInterval(draw);
       }
     },1000)
+
+    setTimeout(()=>{
+      setLight(0);
+      e.target.disabled = false;
+    },(1000*level)+1000);
   }
 
 
   // user draw
   const handleUserDraw = (e,value) =>{
     e.preventDefault();
-    setUserColors(userColors=>[...userColors,value]);
+    userColors.push(value);
 
     if(userColors.length === colors.length){
 
       if(userColors.every((el,index)=>el === colors[index])){
-        alert("Congrtultions!");
+        alert("Congratulations!");
         setLevel(level+1);
         setColors([]);
-        setUserColors([]);
+        userColors=[];
+
       }else{
         alert("You Have Lost!")
         setLevel(3);
         setColors([]);
-        setUserColors([]);
+        userColors=[];
       }
 
     }
   }
 
 
-  console.log(colors,userColors);
-
   return (
     <section className="app">
+      <h2>Round: {level-2}</h2>
       <div className="app__box">
         <article className="app__box__field1" style={light===1?{opacity:"0.5"}:null} id={1} onClick={(e)=>handleUserDraw(e,Number(e.target.id))}></article>
         <article className="app__box__field2" style={light===2?{opacity:"0.5"}:null} id={2} onClick={(e)=>handleUserDraw(e,Number(e.target.id))}></article>
